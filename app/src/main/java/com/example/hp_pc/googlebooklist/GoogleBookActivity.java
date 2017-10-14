@@ -67,10 +67,10 @@ public class GoogleBookActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<BookDetails> data) {
-            // Clear the adapter of previous earthquake data
+            // Clear the adapter of previousBookDetails data
             bookAdapter.clear();
 
-            // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
+            // If there is a valid list of {@link Bookdetails, then add them to the adapter's
             // data set. This will trigger the ListView to update.
             if (data != null && !data.isEmpty()) {
                 bookAdapter.addAll(data);

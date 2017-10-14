@@ -27,12 +27,9 @@ public class Qutils {
     public static final String LOG_TAG = GoogleBookActivity.class.getName();
 
 
-private Qutils(){
+    private Qutils() {
 
-}
-
-
-
+    }
 
 
     /**
@@ -50,15 +47,15 @@ private Qutils(){
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
+        // Extract relevant fields from the JSON response and create a list of {@link BookDetails}s
         List<BookDetails> bookDetailses = extractFeatureFromJson(jsonResponse);
 
-        // Return the list of {@link Earthquake}s
+        // Return the list of {@link BookDetails}s
         return bookDetailses;
     }
 
     /**
-     * Return a list of {@link Earthquake} objects that has been built up from
+     * Return a list of {@link BookDetails} objects that has been built up from
      * parsing a JSON response.
      */
     /**
@@ -71,7 +68,7 @@ private Qutils(){
             return null;
         }
 
-        // Create an empty ArrayList that we can start adding earthquakes to
+        // Create an empty ArrayList that we can start adding BookDetails to
         List<BookDetails> book = new ArrayList<>();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
@@ -82,39 +79,38 @@ private Qutils(){
             // Create a JSONObject from the JSON response string
             JSONObject baseJsonResponse = new JSONObject(bookJSON);
 
-            // Extract the JSONArray associated with the key called "features",
-            // which represents a list of features (or earthquakes).
-            JSONArray earthquakeArray = baseJsonResponse.getJSONArray("items");
+            // Extract the JSONArray associated with the key called "items",
+            // which represents a list of features (or bookist).
+            JSONArray bookArrayArray = baseJsonResponse.getJSONArray("items");
 
-            // For each earthquake in the earthquakeArray, create an {@link Earthquake} object
-            for (int i = 0; i < earthquakeArray.length(); i++) {
+            // For each BookDetails in theBookDetailsArray, create an {@link BookDetails} object
+            for (int i = 0; i < bookArrayArray.length(); i++) {
 
-                // Get a single earthquake at position i within the list of earthquakes
-                JSONObject currentEarthquake = earthquakeArray.getJSONObject(i);
+                // Get a single BookDetails at position i within the list of BookDetails
+                JSONObject currentBookDetails = bookArrayArray.getJSONObject(i);
 
-                // For a given earthquake, extract the JSONObject associated with the
+                // For a given BookDetails, extract the JSONObject associated with the
                 // key called "properties", which represents a list of all properties
-                // for that earthquake.
-                JSONObject properties = currentEarthquake.getJSONObject("volumeInfo");
+                // for that BookDetails.
+                JSONObject properties = currentBookDetails.getJSONObject("volumeInfo");
 
-                // Extract the value for the key called "mag"
+                // Extract the value for the key called "authors"
                 String authors = properties.getString("authors");
 
-                // Extract the value for the key called "place"
+                // Extract the value for the key called "publisher"
                 String publisher = properties.getString("publisher");
 
-                // Extract the value for the key called "time"
+                // Extract the value for the key called "publishedDate"
                 String publishedDate = properties.getString("publishedDate");
 
-                // Extract the value for the key called "url"
+                // Extract the value for the key called "previewLink"
                 String url = properties.getString("previewLink");
 
-                // Create a new {@link Earthquake} object with the magnitude, location, time,
+                // Create a new {@link BookDetails} object with the magnitude, location, time,
                 // and url from the JSON response.
-                BookDetails bookDetails = new BookDetails(authors, publisher, publishedDate
-                        , url);
+                BookDetails bookDetails = new BookDetails(authors, publisher, publishedDate, url);
 
-                // Add the new {@link Earthquake} to the list of earthquakes.
+                // Add the new {@link BookDetails} to the list of BookDetails.
                 book.add(bookDetails);
             }
 
@@ -204,7 +200,6 @@ private Qutils(){
         }
         return output.toString();
     }
-
 
 
 }
